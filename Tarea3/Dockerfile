@@ -1,9 +1,12 @@
 # Utilizamos la imagen base de PyTorch con soporte para CUDA (si tienes GPU) o CPU
 FROM pytorch/pytorch:latest
 
-# Instalamos las dependencias necesarias (como Jupyter)
-RUN pip install --upgrade pip && \
-    pip install jupyter notebook torch torchvision matplotlib numpy
+# Instalamos git y las dependencias necesarias (como Jupyter, las versiones compatibles de torch y CLIP)
+RUN apt-get update && \
+    apt-get install -y git && \
+    pip install --upgrade pip && \
+    pip install jupyter notebook torch==2.6.0 torchvision==0.21.0 matplotlib numpy && \
+    pip install git+https://github.com/openai/CLIP.git  # Installing CLIP from GitHub
 
 # Definimos el directorio de trabajo en el contenedor
 WORKDIR /workspace
